@@ -8,6 +8,8 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+import java.util.List;
+
 public class AmazonHomePage extends BaseHelper {
 
     WebDriver driver;
@@ -38,10 +40,13 @@ public class AmazonHomePage extends BaseHelper {
     @FindBy (id = "twotabsearchtextbox")
     WebElement searchTxtFiled;
 
+  @FindBy (className = "nav-search-submit")
+    WebElement loupe;
 
-
-
-
+  @FindBy (id="brandsRefinements")
+  WebElement brandsContainer;
+  @FindBy (className = "a-list-item")
+  List<WebElement> listOfBrands;
 
 
 
@@ -52,6 +57,7 @@ public class AmazonHomePage extends BaseHelper {
     private void shipping(){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
         wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
+
         dontChangeShipingAdressButton.click();
     }
 
@@ -76,15 +82,28 @@ public class AmazonHomePage extends BaseHelper {
     private void inputSearchTerm (String term){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("twotabsearchtextbox")));
         searchTxtFiled.sendKeys(term);
+        loupe.click();
     }
 
-    public void searchTest (String url, String username,String pass,String term){
+    private void selectBrand (String brand){
+
+        for (WebElement list:listOfBrands){
+            if (list.getText().toLowerCase().contains(brand.toLowerCase())){
+               list.click();
+               break;
+            }
+
+        }
+    }
+
+    public void searchTest (String url, String username,String pass,String term, String brand){
         navigateToHomePage(url);
         shipping();
         clickOnSingIn();
         enterUsername(username);
         enterPass(pass);
         inputSearchTerm(term);
+        selectBrand(brand);
 
     }
 
