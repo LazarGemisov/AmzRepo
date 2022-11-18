@@ -47,6 +47,11 @@ public class AmazonHomePage extends BaseHelper {
   WebElement brandsContainer;
   @FindBy (className = "a-list-item")
   List<WebElement> listOfBrands;
+  @FindBy (id = "nav-link-accountList-nav-line-1")
+  WebElement userName;
+
+  @FindBy (id = "nav-cart-count")
+  WebElement cartCount;
 
 
 
@@ -78,6 +83,34 @@ public class AmazonHomePage extends BaseHelper {
         submitSignIn.click();
 
     }
+    private String checkForUser(){
+        String checkForUserName = userName.getText();
+        System.out.println("Ime logovanog korisnika je "+userName.getText());
+        return checkForUserName;
+    }
+
+    private void checkForCartItems(){
+        int cartDefaultValue = 0;
+        int cartCurrentValue = Integer.parseInt(cartCount.getText());
+
+        if (cartCurrentValue > cartDefaultValue){
+            System.out.println("MISHKO BRAKEEEE WE HAVE SOMETHING IN SHOPPING CART");
+        }else {
+            System.out.println("DRIVE MISHKO CART IS NULL");
+        }
+
+    }
+    private void clearShoppingCart()throws InterruptedException{
+        WebElement cartCount = driver.findElement(By.id("nav-cart-count"));
+        System.out.println(cartCount.getText());
+        WebElement cartButton = driver.findElement(By.id("nav-cart"));
+        cartButton.click();
+        Thread.sleep(2000);
+        WebElement deleteCart = driver.findElement(By.className("a-color-link"));
+        deleteCart.click();
+        WebElement homePageLogo = driver.findElement(By.id("nav-logo-sprites"));
+        homePageLogo.click();
+    }
 
     private void inputSearchTerm (String term){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("twotabsearchtextbox")));
@@ -96,15 +129,29 @@ public class AmazonHomePage extends BaseHelper {
         }
     }
 
-    public void searchTest (String url, String username,String pass,String term, String brand){
+
+    public String searchTest (String url, String username,String pass,String term, String brand)throws InterruptedException{
         navigateToHomePage(url);
         shipping();
         clickOnSingIn();
         enterUsername(username);
         enterPass(pass);
+        checkForCartItems();
+        String userDetails = checkForUser();
+        int cartDefaultValue = 0;
+        int cartCurrentValue = Integer.parseInt(cartCount.getText());
+        if (cartCurrentValue>cartDefaultValue){
+            clearShoppingCart();
+        }
+        Thread.sleep(2000);
         inputSearchTerm(term);
         selectBrand(brand);
 
+
+        return userDetails;
+
     }
+
+
 
 }

@@ -1,6 +1,7 @@
 package pages;
 
 import helpers.BaseHelper;
+import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -24,8 +25,7 @@ public class AmazonSearchResultPage extends BaseHelper {
     @FindBy (className = "s-search-results")
     WebElement searchResultContainer;
 
-    @FindBy (id = "nav-link-accountList-nav-line-1")
-    WebElement userName;
+
 
     @FindBy (id = "low-price")
     WebElement lowPriceRange;
@@ -39,12 +39,6 @@ public class AmazonSearchResultPage extends BaseHelper {
     @FindBy(id = "s-refinements")
     WebElement refinementsCont;
 
-
-
-
-    private void checkForUser(){
-        System.out.println("Ime logovanog korisnika je "+userName.getText());
-    }
 
 
     private void inputLowPriceRnge(String lowPrice){
@@ -76,7 +70,7 @@ public class AmazonSearchResultPage extends BaseHelper {
 
 
     public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
-        checkForUser();
+
         inputLowPriceRnge(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();

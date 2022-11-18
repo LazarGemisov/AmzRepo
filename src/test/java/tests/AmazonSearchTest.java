@@ -19,7 +19,7 @@ public class AmazonSearchTest extends BaseTest {
 
         //MARK: SEARCH TEST AND CHECKING FOR WANTED TERM
         AmazonHomePage amzSearch = new AmazonHomePage(driver);
-        amzSearch.searchTest(url,username,pass,searchTerm,brand);
+        String userDetails = amzSearch.searchTest(url,username,pass,searchTerm,brand);
 
         WebElement allResultsContainer = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllResults = allResultsContainer.findElements(By.className("s-widget-spacing-small"));
@@ -29,11 +29,15 @@ public class AmazonSearchTest extends BaseTest {
             Assert.assertTrue("All of the articles do not contain desired searchTerm",
                     listOfTitles.getText().toLowerCase().contains(termSplitted[0].toLowerCase()) || listOfTitles.getText().toLowerCase().contains(termSplitted[1].toLowerCase()));
         }
+
+        Assert.assertTrue("You are not logged in ",userDetails.toLowerCase().contains(lastName.toLowerCase()));
+
+
         // DONJI DEO KODA BRISEMO
 
         //MARK:-> CHECKING FOR FILTERS AND PRICE RANGE
 
-        AmazonSearchResultPage setPriceAndFilters = new AmazonSearchResultPage(driver);
+        /*AmazonSearchResultPage setPriceAndFilters = new AmazonSearchResultPage(driver);
         setPriceAndFilters.inputPriceRangeAndFilterCategory(lowPrice,highPrice,phoneMemory);
         WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllFilteredResults = filterResultsCont.findElements(By.className("s-widget-spacing-small"));
@@ -72,11 +76,11 @@ public class AmazonSearchTest extends BaseTest {
 
 
 
-        }
+        }*/
 
 
 
-        Thread.sleep(100000);
+        Thread.sleep(3000);
     }
 
 

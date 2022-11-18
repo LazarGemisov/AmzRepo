@@ -54,8 +54,18 @@ public class ProbnaKlasaTest extends BaseTest
 
 
        driver.get("https://www.amazon.com/");
-       WebElement userName = driver.findElement(By.id("nav-link-accountList-nav-line-1"));
-        System.out.println(userName.getText());
+       WebElement cartCount = driver.findElement(By.id("nav-cart-count"));
+        System.out.println(cartCount.getText());
+        WebElement cartButton = driver.findElement(By.id("nav-cart"));
+        cartButton.click();
+        Thread.sleep(2000);
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("delete")));
+        WebElement deleteCart = driver.findElement(By.id("delete"));
+        deleteCart.click();
+        WebElement homePageLogo = driver.findElement(By.id("nav-logo-sprites"));
+        homePageLogo.click();
+
+
 
 
 

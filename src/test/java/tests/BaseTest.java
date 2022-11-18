@@ -11,6 +11,7 @@ public class BaseTest extends BaseHelper
 {
     String url = "https://www.amazon.com/";
     String username ="lazargemisov@gmail.com";
+    String lastName = "Gemišov";
     String pass = "Laki123456";
     String searchTerm = "Iphone 13";
     String[] termSplitted = searchTerm.split(" ") ;
