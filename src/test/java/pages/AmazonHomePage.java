@@ -62,7 +62,6 @@ public class AmazonHomePage extends BaseHelper {
     private void shipping(){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
         wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
-
         dontChangeShipingAdressButton.click();
     }
 

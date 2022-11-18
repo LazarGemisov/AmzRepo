@@ -4,16 +4,12 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import pages.AmazonHomePage;
 import pages.AmazonSearchResultPage;
 
 import java.util.List;
 
 public class AmazonSearchTest extends BaseTest {
-
-
-
     @Test
     public void amzSearchTest() throws InterruptedException {
 
