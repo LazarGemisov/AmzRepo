@@ -9,6 +9,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
+
 import java.util.List;
 
 public class AmazonSearchResultPage extends BaseHelper {
@@ -22,6 +23,9 @@ public class AmazonSearchResultPage extends BaseHelper {
 
     @FindBy (className = "s-search-results")
     WebElement searchResultContainer;
+
+    @FindBy (id = "nav-link-accountList-nav-line-1")
+    WebElement userName;
 
     @FindBy (id = "low-price")
     WebElement lowPriceRange;
@@ -37,6 +41,10 @@ public class AmazonSearchResultPage extends BaseHelper {
 
 
 
+
+    private void checkForUser(){
+        System.out.println("Ime logovanog korisnika je "+userName.getText());
+    }
 
 
     private void inputLowPriceRnge(String lowPrice){
@@ -57,6 +65,7 @@ public class AmazonSearchResultPage extends BaseHelper {
         for (WebElement list:memoryList){
             if (list.getText().toLowerCase().contains(memory.toLowerCase())){
                 list.click();
+
                 break;
             }
         }
@@ -64,11 +73,31 @@ public class AmazonSearchResultPage extends BaseHelper {
     }
 
 
+
+
     public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
+        checkForUser();
         inputLowPriceRnge(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();
         Thread.sleep(3000);
         selectMemorySize(memory);
     }
+    public void clickOnDesiredArticle(int desiredArticle){
+
+        List<WebElement> allSearchResults = searchResultContainer.findElements(By.className("s-widget-spacing-small"));
+        int i = 0;
+
+        for (WebElement list:allSearchResults){
+
+            if (i==desiredArticle-1){
+                allSearchResults.get(i).click();
+                break;
+            }
+            i++;
+
+        }
+    }
+
+
 }

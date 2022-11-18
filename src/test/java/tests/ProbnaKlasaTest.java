@@ -1,10 +1,15 @@
 package tests;
 
+
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.experimental.theories.Theories;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import pages.AmazonSelectedArticlePage;
 
 import java.util.List;
 
@@ -13,45 +18,49 @@ public class ProbnaKlasaTest extends BaseTest
     @Test
     public void proba() throws InterruptedException {
 
-
         String term = "Iphone 13" ;
         String[] split = term.split(" ");
 
 
-
-       // driver.get("https://www.amazon.com/s?k=lightsaber&sprefix=lightsaber%2Caps%2C212&ref=nb_sb_ss_pltr-ranker-24hours_2_10");
-        driver.get("https://www.amazon.com/s?k=Iphone+13&i=mobile&rh=n%3A7072561011%2Cp_89%3AApple%2Cp_n_feature_twelve_browse-bin%3A14674911011%2Cp_36%3A80000-130000&dc&crid=1W3T5Y2X1QWAP&qid=1668521482&rnid=14674871011&sprefix=iphone+13%2Caps%2C184&ref=sr_nr_p_36_1");
-        WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
-        WebElement numberOfResults = driver.findElement(By.className("s-breadcrumb"));
-        List<WebElement> listOfAllFilteredResults = filterResultsCont.findElements(By.className("s-widget-spacing-small"));
-        System.out.println(listOfAllFilteredResults.size());
-        List<WebElement> listOfPrices = filterResultsCont.findElements(By.className("a-price-whole"));
+       // driver.get("https://www.amazon.com/iPhone-Pro-128GB-Sierra-Blue/dp/B0BGYF4CZF/ref=sr_1_1?crid=23RWZOQJUNU07&keywords=iphone%2B13&qid=1668606384&refinements=p_89%3AApple%2Cp_36%3A80000-130000%2Cp_n_feature_twelve_browse-bin%3A14674911011&rnid=14674904011&s=wireless&sprefix=iphone%2B13%2Caps%2C195&sr=1-1&th=1");
+      //  WebElement colorCont = driver.findElement(By.id("variation_color_name"));// BLIZU 1
+       // List<WebElement> listOfColors = colorCont.findElements(By.className("a-row")); BLIZU 1
+        //List<WebElement> listOfColors = colorCont.findElements(By.className("selection"));
 
 
+       // for (WebElement list:listOfColors){
+      //      System.out.println(list.getText());
+      //  }
 
-        int numberOfResultsInt = listOfAllFilteredResults.size();
+       /* driver.get("https://www.amazon.com/iPhone-Pro-128GB-Sierra-Blue/dp/B0BGYF4CZF/ref=sr_1_1?crid=2S3961EYSRHOZ&keywords=iphone%2B13&qid=1668681109&refinements=p_89%3AApple%2Cp_36%3A80000-130000%2Cp_n_feature_twelve_browse-bin%3A14674911011&rnid=14674904011&s=wireless&sprefix=iphone%2B13%2Caps%2C181&sr=1-1&th=1");
+        WebElement cartCount = driver.findElement(By.id("nav-cart-count"));
+        WebElement button = driver.findElement(By.id("add-to-cart-button"));
 
-        System.out.println(listOfPrices.size());
-
-
-        int i = 0;
-       for (WebElement listOfTitles:listOfPrices) {
-
-           if (i < numberOfResultsInt-1){
-               System.out.println(listOfPrices.get(i).getText());
-
-               i++;
-           }else{
-               break;
-           }
+        Select selectQty = new Select(driver.findElement(By.name("quantity")));
+        System.out.println(selectQty.getOptions());
+        selectQty.selectByValue("3");
 
 
+        System.out.println(cartCount.getText());
+        Thread.sleep(2000);
+        button.click();
+        //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-warranty-button-row")));
+        //WebElement cont = driver.findElement(By.className("attach-warranty-button-row"));
+        //List<WebElement> but =cont.findElements(By.className("a-button-inner"));
+        //System.out.println(but.size());
 
-        }
+     //wdWait.until(ExpectedConditions.elementToBeClickable(but.get(1)));
+     //but.get(1).click();*/
+
+
+       driver.get("https://www.amazon.com/");
+       WebElement userName = driver.findElement(By.id("nav-link-accountList-nav-line-1"));
+        System.out.println(userName.getText());
 
 
 
 
-        Thread.sleep(8000);
+
+        Thread.sleep(5000);
     }
 }
