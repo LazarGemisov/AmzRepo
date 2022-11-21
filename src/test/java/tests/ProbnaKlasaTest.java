@@ -53,7 +53,13 @@ public class ProbnaKlasaTest extends BaseTest
      //but.get(1).click();*/
 
 
-       driver.get("https://www.amazon.com/");
+       driver.get("https://www.amazon.com/iPhone-Pro-128GB-Sierra-Blue/dp/B0BGYF4CZF/ref=sr_1_1?crid=1YC6J42IZ45R1&keywords=iphone%2B13&qid=1669038860&refinements=p_89%3AApple%2Cp_36%3A80000-130000%2Cp_n_feature_twelve_browse-bin%3A14674911011&rnid=14674904011&s=wireless&sprefix=iphone%2B13%2Caps%2C205&sr=1-1&th=1");
+
+        Thread.sleep(35000);
+
+        WebElement but = driver.findElement(By.className("attach-checkout-button"));
+        wdWait.until(ExpectedConditions.elementToBeClickable(but));
+        but.click();
 
 
 
@@ -62,6 +68,9 @@ public class ProbnaKlasaTest extends BaseTest
 
 
 
-        Thread.sleep(50000);
+
+
+
+        Thread.sleep(10000);
     }
 }

@@ -28,14 +28,9 @@ public class AmazonCheckoutPage extends BaseHelper {
         shipAddressButton.click();
     }
 
-    private void table () {
-        WebElement test = driver.findElement(By.id("table"));
-        List<WebElement> testS = test.findElements(By.tagName("tr"));
 
-
-    }
     public void checkout(){
         clickOnAddressButton();
-        table();
+// ovde stavi wd vait invisibliity of element
     }
 }
