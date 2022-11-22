@@ -65,9 +65,11 @@ public class AmazonHomePage extends BaseHelper {
         driver.get(url);
     }
     private void shipping(){
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
-        wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
-        dontChangeShippingAddressButton.click();
+        if (dontChangeShippingAddressButton.isDisplayed() == true) {
+            wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
+            wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
+            dontChangeShippingAddressButton.click();
+        }
     }
 
     private void clickOnSingIn(){
