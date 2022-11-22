@@ -29,49 +29,73 @@ public class AmazonSelectedArticlePage extends BaseHelper {
 
     @FindBy(className = "attach-checkout-button") //"proceedToRetailCheckout" old class name of button in popup window
     WebElement proceedBtn;
+   @FindBy (className = "attach-warranty-button-row" )
+    WebElement popUp;
 
-    private void setQty(String desiredQty) throws InterruptedException{
+    private void setQty(String desiredQty, String desiredColor) throws InterruptedException{
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.name("quantity")));
-        Select selectQty = new Select(driver.findElement(By.name("quantity")));
-        System.out.println(selectQty.getOptions());
-        selectQty.selectByValue(desiredQty);
-        Thread.sleep(5000);
+        wdWait.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+        WebElement colorCont = driver.findElement(By.id("variation_color_name"));
+        WebElement colorName = colorCont.findElement(By.className("a-row"));
+        if (colorName.getText().contains(desiredColor)) {
+            Select selectQty = new Select(driver.findElement(By.name("quantity")));
+            selectQty.selectByValue(desiredQty);
+            Thread.sleep(2000);
+        }
+    }
+
+    private void setColor(String desiredColor) throws InterruptedException {
+        WebElement colorCont = driver.findElement(By.id("variation_color_name"));
+        WebElement clrCont = colorCont.findElement(By.className("swatchesSquare"));
+        List<WebElement>listOfColors = clrCont.findElements(By.tagName("img"));
+        List<WebElement> listOfButtons = clrCont.findElements(By.className("a-button-text"));
+
+        int i = 0;
+        for (WebElement list:listOfColors){
+            String colorName = listOfColors.get(i).getAttribute("alt");
+            if (desiredColor.toLowerCase().contains(colorName.toLowerCase())){
+                listOfButtons.get(i).click();
+                break;
+            }
+            i++;
+
+        }
+        Thread.sleep(2000);
     }
     private void clickOnAddToTheCartButton(){
         addToTheCartButton.click();
     }
 
-    private void warrantyPopUp(){
-        WebElement popUp = driver.findElement(By.className("attach-warranty-button-row"));
+    private void warrantyPopUp() throws InterruptedException {
+        // MARK: THIS IS ONLY DISPLAYED ONCE, AND YOUR ACCOUNT REMEMBERS YOUR PREFERENCES
+       // WebElement popUp = driver.findElement(By.className("attach-warranty-button-row"));
         if (popUp.isDisplayed()) {
-            //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-warranty-button-row")));
+            wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-warranty-button-row")));
             List<WebElement> buttonList = buttonsContainer.findElements(By.className("a-button-inner"));
-            wdWait.until(ExpectedConditions.elementToBeClickable(buttonList.get(1)));
+           wdWait.until(ExpectedConditions.elementToBeClickable(buttonList.get(1)));
             buttonList.get(1).click();
+
+
         }
     }
 
     private void proceedToCheckout(){
         //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("sw-atc-confirmation"))); old version of popup window
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-primary-atc-confirm-box")));
-        wdWait.until(ExpectedConditions.elementToBeClickable(proceedBtn));
+       wdWait.until(ExpectedConditions.elementToBeClickable(proceedBtn));
         proceedBtn.click();
     }
 
-    public void addToTheCart(String desiredQty) throws InterruptedException{
-        setQty(desiredQty);
+    public void addToTheCart(String desiredQty,String desiredColor) throws InterruptedException{
+        setColor(desiredColor);
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.name("quantity")));//Thread.sleep(2000);
+        wdWait.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
+        wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.name("quantity")));
+        wdWait.until(ExpectedConditions.elementToBeClickable(addToTheCartButton));
+        setQty(desiredQty,desiredColor);
         clickOnAddToTheCartButton();
-       // warrantyPopUp();
+        Thread.sleep(2000);
+        warrantyPopUp();
         proceedToCheckout();
-
     }
-
-
-
-
-
-
-
-
-
 }

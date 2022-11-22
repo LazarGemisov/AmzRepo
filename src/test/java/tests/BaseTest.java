@@ -17,12 +17,12 @@ public class BaseTest extends BaseHelper {
     int lowPriceInt = Integer.parseInt(lowPrice);
     String highPrice = "1300";
     int highPriceInt = Integer.parseInt(highPrice);
-
     String phoneMemory = "128 GB";
     String phoneMemoryTogether = phoneMemory.replace(" ", "");
     int desiredArticle = 1;
-
+    String desiredColor = "Graphite";
     String desiredQuantity = "3";
+    String validTest = "true";
 
     @Before
     public void testInit()

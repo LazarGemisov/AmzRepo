@@ -1,20 +1,14 @@
 package pages;
 
 import helpers.BaseHelper;
-import net.bytebuddy.asm.Advice;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-
-
 import java.util.List;
 
 public class AmazonSearchResultPage extends BaseHelper {
-
     WebDriver driver;
     public AmazonSearchResultPage(WebDriver driver)
     {
@@ -35,7 +29,7 @@ public class AmazonSearchResultPage extends BaseHelper {
 
 
 
-    private void inputLowPriceRnge(String lowPrice){
+    private void inputLowPriceRange(String lowPrice){
         lowPriceRange.sendKeys(lowPrice);
     }
 
@@ -53,16 +47,13 @@ public class AmazonSearchResultPage extends BaseHelper {
         for (WebElement list:memoryList){
             if (list.getText().toLowerCase().contains(memory.toLowerCase())){
                 list.click();
-
                 break;
             }
         }
-
     }
 
     public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
-
-        inputLowPriceRnge(lowPrice);
+        inputLowPriceRange(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();
         Thread.sleep(3000);
@@ -83,6 +74,4 @@ public class AmazonSearchResultPage extends BaseHelper {
 
         }
     }
-
-
 }

@@ -10,18 +10,18 @@ import pages.AmazonSelectedArticlePage;
 import pages.AmazonShoppingCartSummaryPage;
 import java.util.List;
 
-public class AmzShoppingCartSummary extends BaseTest {
+public class AmazonShoppingCartSummary extends BaseTest {
 
     @Test
     public void AmzShoppingCartSummary()throws InterruptedException{
 
         //MARK: SEARCH TEST AND CHECKING FOR WANTED TERM
         AmazonHomePage amzSearch = new AmazonHomePage(driver);
-        String userDetails = amzSearch.searchTest(url,username,pass,searchTerm,brand);
+        String userDetails = amzSearch.amazonSearch(url,username,pass,searchTerm,brand);
 
         WebElement allResultsContainer = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllResults = allResultsContainer.findElements(By.className("s-widget-spacing-small"));
-        System.out.println(listOfAllResults.size());
+
 
         for (WebElement listOfTitles:listOfAllResults) {
             Assert.assertTrue("All of the articles do not contain desired searchTerm",
@@ -38,7 +38,7 @@ public class AmzShoppingCartSummary extends BaseTest {
         setPriceAndFilters.inputPriceRangeAndFilterCategory(lowPrice,highPrice,phoneMemory);
         WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllFilteredResults = filterResultsCont.findElements(By.className("s-widget-spacing-small"));
-        //System.out.println(listOfAllFilteredResults.size());
+
 
         for (WebElement listOfTitles:listOfAllFilteredResults) {
             Assert.assertTrue("All of the articles do not contain desired searchTerm",
@@ -69,7 +69,7 @@ public class AmzShoppingCartSummary extends BaseTest {
         Thread.sleep(2000);
         //MARK: SETTING QUANTITY,ADDING TO THE CART AND PROCEEDING TO CHECKOUT
         AmazonSelectedArticlePage addQtyAndToTheCart = new AmazonSelectedArticlePage(driver);
-        addQtyAndToTheCart.addToTheCart(desiredQuantity);
+        addQtyAndToTheCart.addToTheCart(desiredQuantity,desiredColor);
         Thread.sleep(2000);
 
         //MARK: CHECKOUT MOVE TO ANOTHER CLASS
@@ -80,9 +80,7 @@ public class AmzShoppingCartSummary extends BaseTest {
 
         AmazonShoppingCartSummaryPage checkSummary = new AmazonShoppingCartSummaryPage(driver);
         String summaryTest = checkSummary.checkSummary();
-        String validTest = "true";
-        System.out.println(summaryTest.toLowerCase());
-
+        System.out.println("DEV COMMENT: CART CALCULATOR WORKING = "+summaryTest.toUpperCase());
         Assert.assertTrue("Prices do not add up",summaryTest.contains(validTest));
 
     }

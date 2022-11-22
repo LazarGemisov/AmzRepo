@@ -53,24 +53,34 @@ public class ProbnaKlasaTest extends BaseTest
      //but.get(1).click();*/
 
 
-       driver.get("https://www.amazon.com/iPhone-Pro-128GB-Sierra-Blue/dp/B0BGYF4CZF/ref=sr_1_1?crid=1YC6J42IZ45R1&keywords=iphone%2B13&qid=1669038860&refinements=p_89%3AApple%2Cp_36%3A80000-130000%2Cp_n_feature_twelve_browse-bin%3A14674911011&rnid=14674904011&s=wireless&sprefix=iphone%2B13%2Caps%2C205&sr=1-1&th=1");
-
-        Thread.sleep(35000);
-
-        WebElement but = driver.findElement(By.className("attach-checkout-button"));
-        wdWait.until(ExpectedConditions.elementToBeClickable(but));
-        but.click();
+       driver.get("https://www.amazon.com/iPhone-Pro-128GB-Sierra-Blue/dp/B0BGYF4CZF/ref=sr_1_1?crid=2P8FQB2MNTD3S&keywords=iphone%2B13&qid=1669206395&s=wireless&sprefix=%2Cmobile%2C251&sr=1-1&th=1");
 
 
+        String desiredColor = "Silver";
+        WebElement colorCont = driver.findElement(By.id("variation_color_name"));
+        WebElement clrCont = colorCont.findElement(By.className("swatchesSquare"));
+        List<WebElement>listOfColors = clrCont.findElements(By.tagName("img"));
+        List<WebElement> listOfButtons = clrCont.findElements(By.className("a-button-text"));
+        WebElement colorNameTag = colorCont.findElement(By.className("a-row"));
+        System.out.println("naziv boje je"+colorNameTag.getText());
+        System.out.println("buttons "+listOfButtons.size());
+        System.out.println(listOfColors.size());
+        listOfButtons.get(1).click();
+        int i = 0;
+        for (WebElement list:listOfColors){
+            String colorName = listOfColors.get(i).getAttribute("alt");
+            System.out.println(colorName);
+            if (desiredColor.toLowerCase().contains(colorName.toLowerCase())){
+                listOfButtons.get(i).click();
+                System.out.println("naziv boje posle  "+colorNameTag.getText());
+                break;
+            }
+            i++;
+
+        }
 
 
 
-
-
-
-
-
-
-        Thread.sleep(10000);
+        Thread.sleep(5000);
     }
 }
