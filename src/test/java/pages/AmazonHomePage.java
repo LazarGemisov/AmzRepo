@@ -21,9 +21,7 @@ public class AmazonHomePage extends BaseHelper {
 
 
     @FindBy (className = "glow-toaster-button-dismiss")
-    WebElement dontChangeShipingAdressButton;
-
-
+    WebElement dontChangeShippingAddressButton;
     @FindBy (id="nav-link-accountList")
     WebElement singInButton;
 
@@ -40,20 +38,27 @@ public class AmazonHomePage extends BaseHelper {
     @FindBy (id = "twotabsearchtextbox")
     WebElement searchTxtFiled;
 
-  @FindBy (className = "nav-search-submit")
+    @FindBy (className = "nav-search-submit")
     WebElement loupe;
 
-  @FindBy (id="brandsRefinements")
-  WebElement brandsContainer;
-  @FindBy (className = "a-list-item")
-  List<WebElement> listOfBrands;
-  @FindBy (id = "nav-link-accountList-nav-line-1")
-  WebElement userName;
+    @FindBy (id="brandsRefinements")
+    WebElement brandsContainer;
+    @FindBy (className = "a-list-item")
+    List<WebElement> listOfBrands;
+    @FindBy (id = "nav-link-accountList-nav-line-1")
+    WebElement userName;
 
-  @FindBy (id = "nav-cart-count")
-  WebElement cartCount;
+    @FindBy (id = "nav-cart-count")
+    WebElement cartCount;
 
+    @FindBy (id = "nav-cart" )
+    WebElement cartButton;
+   @FindBy (className = "a-color-link" )
+    WebElement deleteCart;
 
+   @FindBy(id = "nav-logo-sprites" )
+   WebElement homePageLogo;
+   String signInMessage = "Hello, sign in";
 
 
     private void navigateToHomePage(String url){
@@ -62,7 +67,7 @@ public class AmazonHomePage extends BaseHelper {
     private void shipping(){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
         wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
-        dontChangeShipingAdressButton.click();
+        dontChangeShippingAddressButton.click();
     }
 
     private void clickOnSingIn(){
@@ -100,15 +105,16 @@ public class AmazonHomePage extends BaseHelper {
 
     }
     private void clearShoppingCart()throws InterruptedException{
-        WebElement cartCount = driver.findElement(By.id("nav-cart-count"));
+        //WebElement cartCount = driver.findElement(By.id("nav-cart-count"));
         System.out.println(cartCount.getText());
-        WebElement cartButton = driver.findElement(By.id("nav-cart"));
+        //WebElement cartButton = driver.findElement(By.id("nav-cart"));
         cartButton.click();
         Thread.sleep(2000);
-        WebElement deleteCart = driver.findElement(By.className("a-color-link"));
+       // WebElement deleteCart = driver.findElement(By.className("a-color-link"));
         deleteCart.click();
-        WebElement homePageLogo = driver.findElement(By.id("nav-logo-sprites"));
+        //WebElement homePageLogo = driver.findElement(By.id("nav-logo-sprites"));
         homePageLogo.click();
+        System.out.println("MISHKO DRIVE WE HAD DELETE IT !!!");
     }
 
     private void inputSearchTerm (String term){
@@ -129,13 +135,18 @@ public class AmazonHomePage extends BaseHelper {
     }
 
 
+
     public String searchTest (String url, String username,String pass,String term, String brand)throws InterruptedException{
         navigateToHomePage(url);
         shipping();
-        clickOnSingIn();
-        enterUsername(username);
-        enterPass(pass);
+
+        if (userName.getText().contains(signInMessage)){
+            clickOnSingIn();
+            enterUsername(username);
+            enterPass(pass);
+        }
         checkForCartItems();
+
         String userDetails = checkForUser();
         int cartDefaultValue = 0;
         int cartCurrentValue = Integer.parseInt(cartCount.getText());
@@ -143,9 +154,9 @@ public class AmazonHomePage extends BaseHelper {
             clearShoppingCart();
         }
         Thread.sleep(2000);
+
         inputSearchTerm(term);
         selectBrand(brand);
-
 
         return userDetails;
 

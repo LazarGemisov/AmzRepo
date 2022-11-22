@@ -27,7 +27,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
     @FindBy (className = "attach-warranty-button-row")
     WebElement buttonsContainer;
 
-    @FindBy(className = "attach-checkout-button") //"proceedToRetailCheckout
+    @FindBy(className = "attach-checkout-button") //"proceedToRetailCheckout" old class name of button in popup window
     WebElement proceedBtn;
 
     private void setQty(String desiredQty) throws InterruptedException{
@@ -52,7 +52,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
     }
 
     private void proceedToCheckout(){
-        //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("sw-atc-confirmation")));
+        //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("sw-atc-confirmation"))); old version of popup window
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-primary-atc-confirm-box")));
         wdWait.until(ExpectedConditions.elementToBeClickable(proceedBtn));
         proceedBtn.click();

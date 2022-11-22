@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import pages.AmazonCheckoutPage;
 import pages.AmazonHomePage;
 import pages.AmazonSearchResultPage;
 import pages.AmazonSelectedArticlePage;
@@ -34,6 +33,7 @@ public class AmzShoppingCartSummary extends BaseTest {
         //MARK: SECOND TASK
         //MARK:-> CHECKING FOR FILTERS AND PRICE RANGE
 
+
         AmazonSearchResultPage setPriceAndFilters = new AmazonSearchResultPage(driver);
         setPriceAndFilters.inputPriceRangeAndFilterCategory(lowPrice,highPrice,phoneMemory);
         WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
@@ -43,6 +43,7 @@ public class AmzShoppingCartSummary extends BaseTest {
         for (WebElement listOfTitles:listOfAllFilteredResults) {
             Assert.assertTrue("All of the articles do not contain desired searchTerm",
                     listOfTitles.getText().toLowerCase().contains(termSplitted[0].toLowerCase()) || listOfTitles.getText().toLowerCase().contains(termSplitted[1].toLowerCase())&& listOfTitles.getText().contains(phoneMemoryTogether.toLowerCase()));
+           // Assert.assertTrue("All of the article titles do not contain memory size",listOfTitles.getText().toLowerCase().contains(phoneMemory.toLowerCase()));
         }
 
         List<WebElement> listOfPrices = filterResultsCont.findElements(By.className("a-price-whole"));
@@ -72,8 +73,8 @@ public class AmzShoppingCartSummary extends BaseTest {
         Thread.sleep(2000);
 
         //MARK: CHECKOUT MOVE TO ANOTHER CLASS
-        AmazonCheckoutPage checkout = new AmazonCheckoutPage(driver);
-        checkout.checkout();
+       /* AmazonCheckoutPage checkout = new AmazonCheckoutPage(driver);
+        checkout.checkout();*/
 
         // MARK THIRD PART OF THE TASK
 

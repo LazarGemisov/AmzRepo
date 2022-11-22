@@ -24,18 +24,12 @@ public class AmazonSearchResultPage extends BaseHelper {
 
     @FindBy (className = "s-search-results")
     WebElement searchResultContainer;
-
-
-
     @FindBy (id = "low-price")
     WebElement lowPriceRange;
-
     @FindBy (id = "high-price")
     WebElement highPriceRange;
-
     @FindBy (id = "a-autoid-1")
     WebElement priceRangeButton;
-
     @FindBy(id = "s-refinements")
     WebElement refinementsCont;
 
@@ -65,9 +59,6 @@ public class AmazonSearchResultPage extends BaseHelper {
         }
 
     }
-
-
-
 
     public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
 

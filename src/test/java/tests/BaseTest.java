@@ -5,10 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 
 
-public class BaseTest extends BaseHelper
-
-
-{
+public class BaseTest extends BaseHelper {
     String url = "https://www.amazon.com/";
     String username ="lazargemisov@gmail.com";
     String lastName = "Gemišov";
@@ -16,7 +13,6 @@ public class BaseTest extends BaseHelper
     String searchTerm = "Iphone 13";
     String[] termSplitted = searchTerm.split(" ") ;
     String brand = "Apple";
-
     String lowPrice = "800";
     int lowPriceInt = Integer.parseInt(lowPrice);
     String highPrice = "1300";

@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class AmazonShoppingCartSummaryPage extends BaseHelper {
 
@@ -14,6 +15,10 @@ public class AmazonShoppingCartSummaryPage extends BaseHelper {
         this.driver=driver;
         PageFactory.initElements(driver,this);
     }
+    @FindBy (id = "shipToThisAddressButton")
+    WebElement shipAddressButton;
+
+
 
     @FindBy (xpath = "//*[@id=\"subtotals-marketplace-table\"]/table/tbody/tr[1]/td[2]")
     WebElement itemPrice;
@@ -28,9 +33,12 @@ public class AmazonShoppingCartSummaryPage extends BaseHelper {
     @FindBy(xpath = "//*[@id=\"subtotals-marketplace-table\"]/table/tbody/tr[8]/td[2]")
             WebElement orderTotal;
 
+    private void clickOnAddressButton(){
+        wdWait.until(ExpectedConditions.elementToBeClickable(shipAddressButton));
+        shipAddressButton.click();
+    }
 
-
-private String checkCart () throws InterruptedException {
+    private String checkCart () throws InterruptedException {
     Thread.sleep(3000);
     Float itemPriceFloat = Float.parseFloat(itemPrice.getText().replace("$","").replace(",",""));
     Float shippingPriceFloat = Float.parseFloat(shippingPrice.getText().replace("$",""));
@@ -39,10 +47,6 @@ private String checkCart () throws InterruptedException {
     Float importFeeFloat = Float.parseFloat(importFeeDeposit.getText().replace("$",""));
     Float orderTotalFloat = Float.parseFloat(orderTotal.getText().replace("$","").replace(",",""));
     String summary ="";
-
-
-
-
 
     if (itemPriceFloat+shippingPriceFloat+estimatedTaxFloat+importFeeFloat == orderTotalFloat){
          summary = "true";
@@ -55,6 +59,7 @@ private String checkCart () throws InterruptedException {
 }
 
 public String checkSummary() throws InterruptedException {
+        clickOnAddressButton();
         checkCart();
         String summary = checkCart();
         return summary;
