@@ -18,7 +18,7 @@ public class AmazonSearchTest extends BaseTest {
 
         WebElement allResultsContainer = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllResults = allResultsContainer.findElements(By.className("s-widget-spacing-small"));
-        System.out.println("DEV COMMENTS: Size of article on result page is "+listOfAllResults.size());
+        System.out.println("DEV COMMENTS: Size of article on RESULT page is "+listOfAllResults.size());
 
         for (WebElement listOfTitles:listOfAllResults) {
             // TITLE: ASSERT FOR CHECKING SEARCH TERM IN RESULTS
