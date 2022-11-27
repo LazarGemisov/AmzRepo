@@ -1,4 +1,4 @@
-package tests;
+package helpers;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -7,6 +7,7 @@ import org.openqa.selenium.WebElement;
 import pages.AmazonHomePage;
 import pages.AmazonSearchResultPage;
 import pages.AmazonSelectedArticlePage;
+import tests.BaseTest;
 
 import java.util.List;
 

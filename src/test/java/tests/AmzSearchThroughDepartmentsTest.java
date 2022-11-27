@@ -12,7 +12,7 @@ import pages.NewAmazonCategoryAndFilterResultPage;
 
 import java.util.List;
 
-public class NewAmzSearchThroughDepartmentsTest extends BaseTest {
+public class AmzSearchThroughDepartmentsTest extends BaseTest {
 
     @Test
     public void amzCategoryAndFilterTest () throws InterruptedException{
