@@ -18,6 +18,8 @@ public class AmazonHomePage extends BaseHelper {
         PageFactory.initElements(driver,this);
     }
 
+    @FindBy(className = "glow-toaster-content")
+    WebElement shippingContainer;
 
     @FindBy (className = "glow-toaster-button-dismiss")
     WebElement dontChangeShippingAddressButton;
@@ -50,8 +52,19 @@ public class AmazonHomePage extends BaseHelper {
    @FindBy(id = "nav-logo-sprites" )
    WebElement homePageLogo;
    String signInMessage = "Hello, sign in";
+    @FindBy (id = "nav-hamburger-menu" )
+    WebElement hamburgerMenuBtn;
+    @FindBy (id = "hmenu-content" )
+    WebElement hamburgerMenuCont;
+    @FindBy (className = "hmenu-translateX")
+    WebElement subCategoryCont;
 
+    @FindBy(id = "auth-warning-message-box")
+    WebElement warningForSignIn;
 
+    private void deleteAllCookies()  {
+        driver.manage().deleteAllCookies();
+    }
     private void navigateToHomePage(String url){
         driver.get(url);
     }
@@ -59,13 +72,11 @@ public class AmazonHomePage extends BaseHelper {
             wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("glow-toaster-footer")));
             wdWait.until(ExpectedConditions.elementToBeClickable(By.className("glow-toaster-button-dismiss")));
             dontChangeShippingAddressButton.click();
-
     }
 
     private void clickOnSingIn(){
-
+      wdWait.until(ExpectedConditions.elementToBeClickable(singInButton));
       singInButton.click();
-
     }
     private void enterUsername(String username){
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("auth-workflow")));
@@ -76,9 +87,16 @@ public class AmazonHomePage extends BaseHelper {
         passTxtField.sendKeys(pass);
         submitSignIn.click();
     }
+
+    private void confirmAccount() throws InterruptedException {
+        if (warningForSignIn.isDisplayed()) {
+            Thread.sleep(15000);
+        }
+    }
     private String checkForUser(){
-        String checkForUserName = userName.getText();
-        System.out.println("DEV COMMENTS:Name of  logged in user is - "+userName.getText());
+        String checkForUserName = userName.getText().replace("Hello","")
+                                  .replace(",","").replace(" ","");
+        System.out.println("DEV CHECK:Name of  logged in user is - "+checkForUserName);
         return checkForUserName;
     }
     private void checkForCartItems(){
@@ -86,17 +104,17 @@ public class AmazonHomePage extends BaseHelper {
         int cartCurrentValue = Integer.parseInt(cartCount.getText());
 
         if (cartCurrentValue > cartDefaultValue){
-            System.out.println("DEV COMMENTS: MISHKO BRAKEEEE WE HAVE SOMETHING IN SHOPPING CART");
+            System.out.println("DEV CHECK: WE HAVE SOMETHING IN SHOPPING CART");
         }else {
-            System.out.println("DEV COMMENTS: DRIVE MISHKO CART IS NULL");
+            System.out.println("DEV CHECK: SHOPPING CART IS EMPTY ");
         }
     }
     private void clearShoppingCart()throws InterruptedException{
         System.out.println(cartCount.getText());
         cartButton.click();
-        Thread.sleep(2000);
+        wdWait.until(ExpectedConditions.elementToBeClickable(deleteCart));
         deleteCart.click();homePageLogo.click();
-        System.out.println("DEV COMMENTS:MISHKO DRIVE WE HAD DELETE EVERYTHING IN THE CART !!!");
+        System.out.println("DEV CHECK: WE HAD DELETE EVERYTHING IN THE CART !!!");
     }
 
     private void inputSearchTerm (String term){
@@ -116,10 +134,71 @@ public class AmazonHomePage extends BaseHelper {
     }
 
 
+    private void clickOnCategoryMenu(){
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-hamburger-menu")));
+        hamburgerMenuBtn.click();
+    }
+    private void clickOnCategory (String category) throws InterruptedException {
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("hmenu-content")));
+        List<WebElement> listOfCategories = hamburgerMenuCont.findElements(By.className("hmenu-item"));
+        for (WebElement list:listOfCategories){
+            if (list.getText().contains(category)) {
+                list.click();
+                break;
+            }
+        }
+        //Thread.sleep(1000);
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("hmenu-translateX")));
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("hmenu-item")));
+    }
+    private void clickOnSubCategory(String subCategory){
+
+
+        List<WebElement> listOfSubCategories = subCategoryCont.findElements(By.className("hmenu-item"));
+        for (WebElement list:listOfSubCategories){
+            if (list.getText().contains(subCategory)) {
+                list.click();
+                break;
+            }
+
+        }
+
+    }
+
+
 
     public String amazonSearch(String url, String username, String pass, String term, String brand)throws InterruptedException{
+        deleteAllCookies();
         navigateToHomePage(url);
-        if (dontChangeShippingAddressButton.isDisplayed() == true) {
+
+        if (shippingContainer.isDisplayed()) {
+            shipping();
+        }
+
+        if (userName.getText().contains(signInMessage)){
+            clickOnSingIn();
+            enterUsername(username);
+            enterPass(pass);
+        }
+        confirmAccount();
+        checkForCartItems();
+
+        String userDetails = checkForUser();
+        int cartDefaultValue = 0;
+        int cartCurrentValue = Integer.parseInt(cartCount.getText());
+        if (cartCurrentValue>cartDefaultValue){
+            clearShoppingCart();
+        }
+        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("twotabsearchtextbox")));
+        inputSearchTerm(term);
+        selectBrand(brand);
+        return userDetails;
+    }
+
+    //MARK: THIS FUNCTION IS FOR AMZ SEARCH THROUGH DEPARTMENTS TEST---------------------------------------------
+    public String amzForDepartments(String url, String username, String pass, String category, String subCategory, String term, String brand) throws InterruptedException {
+        navigateToHomePage(url);
+        if (dontChangeShippingAddressButton.isDisplayed()) {
             shipping();
         }
         if (userName.getText().contains(signInMessage)){
@@ -135,11 +214,10 @@ public class AmazonHomePage extends BaseHelper {
         if (cartCurrentValue>cartDefaultValue){
             clearShoppingCart();
         }
-        Thread.sleep(2000);
-
-        inputSearchTerm(term);
-        selectBrand(brand);
-
+        //Thread.sleep(1000);
+        clickOnCategoryMenu();
+        clickOnCategory(category);
+        clickOnSubCategory(subCategory);
         return userDetails;
     }
 }

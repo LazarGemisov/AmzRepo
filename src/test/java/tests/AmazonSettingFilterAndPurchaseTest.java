@@ -10,7 +10,7 @@ import pages.AmazonSelectedArticlePage;
 import pages.AmazonShoppingCartSummaryPage;
 import java.util.List;
 
-public class AmazonShoppingCartSummary extends BaseTest {
+public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
 
     @Test
     public void AmzShoppingCartSummary()throws InterruptedException{
@@ -30,7 +30,7 @@ public class AmazonShoppingCartSummary extends BaseTest {
 
         Assert.assertTrue("You are not logged in ",userDetails.toLowerCase().contains(lastName.toLowerCase()));
 
-        //MARK: SECOND TASK
+
         //MARK:-> CHECKING FOR FILTERS AND PRICE RANGE
 
 
@@ -49,19 +49,35 @@ public class AmazonShoppingCartSummary extends BaseTest {
         List<WebElement> listOfPrices = filterResultsCont.findElements(By.className("a-price-whole"));
         int numberOfResultsInt = listOfAllFilteredResults.size();
 
+        String priceOfFilteredResults;
+        int priceOfFilteredResultsInt;
+        boolean priceIsWithinRange = true;
         int i = 0;
         for (WebElement listOfTitles:listOfPrices) {
 
             if (i < numberOfResultsInt){
-                String priceOfFilteredResults = listOfPrices.get(i).getText();
-                int priceOfFilteredResultsInt = Integer.parseInt(priceOfFilteredResults.replace(",",""));
+                 priceOfFilteredResults = listOfPrices.get(i).getText();
+                priceOfFilteredResultsInt = Integer.parseInt(priceOfFilteredResults.replace(",",""));
                 //MARK: HERE WE CAN'T DO ASSERT BECAUSE AMAZON IS ALWAYS PUTTING MORE ITEMS BELOW PRICE RANGE
                 // Assert.assertTrue("Price isn't in within required range ",priceOfFilteredResultsInt >= lowPriceInt && priceOfFilteredResultsInt <= highPriceInt);
                 i++;
             }else{
                 break;
             }
+            if(priceOfFilteredResultsInt > lowPriceInt && priceOfFilteredResultsInt < highPriceInt){
+                priceIsWithinRange = true;
+            }else {
+                priceIsWithinRange = false;
+            }
         }
+
+        if (priceIsWithinRange){
+            System.out.println("DEV COMMENT: PRICES OF ALL RESULTS ARE WITHIN PRICE RANGE");
+        }else {
+            System.out.println("DEV COMMENT: PRICE OF FILTERED RESULTS ARE NOT WITHIN PRICE RANGE"+System.lineSeparator()+
+                                "HERE WE CAN'T DO ASSERT BECAUSE AMAZON IS ALWAYS PUTTING MORE ITEMS BELOW PRICE RANGE");
+        }
+
 
         //MARK: CLICKING ON DESIRED ARTICLE
 

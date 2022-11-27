@@ -23,7 +23,18 @@ public class BaseTest extends BaseHelper {
     String desiredColor = "Graphite";
     String desiredQuantity = "3";
     String validTest = "true";
+    String category = "Electronics";
+    String subCategory = "Cell Phones & Accessories";
 
+    String devSummary = "DEV SUMMARY: WHILE TESTING DEPARTMENTS I HAD OBSERVED THAT WHEN WE ENTER CellPhone&Accessories DEPARTMENT " +
+                         "THERE IS A LACK OF FILTER"+System.lineSeparator()+
+                        "FOR SEARCHING PHONES, LIKE THERE IS WHEN YOU SEARCH ALL DEPARTMENTS I WOULD RAISE A BUG FOR THAT, " +
+                        "ALSO WHILE MANUALLY"+System.lineSeparator()+
+                        "TESTING ON MOBILE BROWSER I HAD NOTICED DIFFERENT CellPhone&Accessories HOME PAGE " +
+                         "SCREENSHOT IS ATTACHED IN THIS PROJECT"+System.lineSeparator()+
+                            "DEV SUMMARY: END";
+        // driver clear cash // chrome options
+        // task 2 iz filtera categorija
     @Before
     public void testInit()
     {

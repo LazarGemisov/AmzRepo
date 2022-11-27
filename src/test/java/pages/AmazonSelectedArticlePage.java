@@ -31,6 +31,14 @@ public class AmazonSelectedArticlePage extends BaseHelper {
     WebElement proceedBtn;
    @FindBy (className = "attach-warranty-button-row" )
     WebElement popUp;
+   @FindBy(id = "desktop_buybox")
+   WebElement buyBoxContainer;
+   @FindBy (className = "js-feature-refresh-overlay")
+   WebElement refreshForColor;
+   @FindBy (id = "sellYoursHere_feature_div")
+   WebElement addCont;
+   @FindBy (id = "feature-bullets")
+   WebElement feature;
 
     private void setQty(String desiredQty, String desiredColor) throws InterruptedException{
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.name("quantity")));
@@ -40,7 +48,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         if (colorName.getText().contains(desiredColor)) {
             Select selectQty = new Select(driver.findElement(By.name("quantity")));
             selectQty.selectByValue(desiredQty);
-            Thread.sleep(2000);
+            //Thread.sleep(2000);
         }
     }
 
@@ -60,9 +68,10 @@ public class AmazonSelectedArticlePage extends BaseHelper {
             i++;
 
         }
-        Thread.sleep(2000);
+        Thread.sleep(2000); // cheat
     }
     private void clickOnAddToTheCartButton(){
+        wdWait.until(ExpectedConditions.elementToBeClickable(addToTheCartButton));
         addToTheCartButton.click();
     }
 
@@ -88,7 +97,10 @@ public class AmazonSelectedArticlePage extends BaseHelper {
 
     public void addToTheCart(String desiredQty,String desiredColor) throws InterruptedException{
         setColor(desiredColor);
-        wdWait.until(ExpectedConditions.presenceOfElementLocated(By.name("quantity")));//Thread.sleep(2000);
+        //Thread.sleep(2000);
+        wdWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("hover")));
+        WebElement addText = feature.findElement(By.className("a-unordered-list"));
+        wdWait.until(ExpectedConditions.visibilityOf(addText));
         wdWait.until(ExpectedConditions.elementToBeClickable(By.name("quantity")));
         wdWait.until(ExpectedConditions.visibilityOfElementLocated(By.name("quantity")));
         wdWait.until(ExpectedConditions.elementToBeClickable(addToTheCartButton));
@@ -97,5 +109,6 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         Thread.sleep(2000);
         warrantyPopUp();
         proceedToCheckout();
+
     }
 }

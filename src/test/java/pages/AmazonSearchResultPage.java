@@ -30,6 +30,7 @@ public class AmazonSearchResultPage extends BaseHelper {
 
 
     private void inputLowPriceRange(String lowPrice){
+        js.executeScript("arguments[0].scrollIntoView();",lowPriceRange);
         lowPriceRange.sendKeys(lowPrice);
     }
 
@@ -39,25 +40,31 @@ public class AmazonSearchResultPage extends BaseHelper {
 
     private void clickToFilterPriceRange(){
         priceRangeButton.click();
+        System.out.println("DEV CHECK: PRICE RANGE IS APPLIED");
     }
 
     private  void selectMemorySize(String memory){
 
         List<WebElement> memoryList = refinementsCont.findElements(By.className("a-list-item"));
         for (WebElement list:memoryList){
+
             if (list.getText().toLowerCase().contains(memory.toLowerCase())){
+                js.executeScript("arguments[0].scrollIntoView();",list);
                 list.click();
                 break;
             }
         }
+        System.out.println("DEV CHECK: MEMORY SIZE HAVE BEEN SELECTED");
     }
 
     public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
+
         inputLowPriceRange(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();
-        Thread.sleep(3000);
         selectMemorySize(memory);
+        Thread.sleep(3000);
+
     }
     public void clickOnDesiredArticle(int desiredArticle){
 
@@ -66,12 +73,13 @@ public class AmazonSearchResultPage extends BaseHelper {
 
         for (WebElement list:allSearchResults){
 
-            if (i==desiredArticle-1){
+            if (i==desiredArticle){
                 allSearchResults.get(i).click();
                 break;
             }
             i++;
 
         }
+        System.out.println("DEV CHECK: SELECTED ARTICLE WAS CHOSEN");
     }
 }

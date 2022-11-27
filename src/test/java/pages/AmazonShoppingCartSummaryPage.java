@@ -32,6 +32,7 @@ public class AmazonShoppingCartSummaryPage extends BaseHelper {
             WebElement importFeeDeposit;
     @FindBy(xpath = "//*[@id=\"subtotals-marketplace-table\"]/table/tbody/tr[8]/td[2]")
             WebElement orderTotal;
+    //*[@id="subtotals-marketplace-table"]/table/tbody/tr[1]/td[2]
 
     private void clickOnAddressButton(){
         wdWait.until(ExpectedConditions.elementToBeClickable(shipAddressButton));
@@ -47,6 +48,8 @@ public class AmazonShoppingCartSummaryPage extends BaseHelper {
     Float importFeeFloat = Float.parseFloat(importFeeDeposit.getText().replace("$",""));
     Float orderTotalFloat = Float.parseFloat(orderTotal.getText().replace("$","").replace(",",""));
     String summary ="";
+
+
 
     if (itemPriceFloat+shippingPriceFloat+estimatedTaxFloat+importFeeFloat == orderTotalFloat){
          summary = "true";
