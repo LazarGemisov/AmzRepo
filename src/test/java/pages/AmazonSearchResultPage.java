@@ -26,9 +26,19 @@ public class AmazonSearchResultPage extends BaseHelper {
     WebElement priceRangeButton;
     @FindBy(id = "s-refinements")
     WebElement refinementsCont;
+    @FindBy (className = "a-list-item")
+    List<WebElement> listOfBrands;
 
 
+    private void selectBrand (String brand){
 
+        for (WebElement list:listOfBrands){
+            if (list.getText().toLowerCase().contains(brand.toLowerCase())){
+                list.click();
+                break;
+            }
+        }
+    }
     private void inputLowPriceRange(String lowPrice){
         js.executeScript("arguments[0].scrollIntoView();",lowPriceRange);
         lowPriceRange.sendKeys(lowPrice);
@@ -57,12 +67,13 @@ public class AmazonSearchResultPage extends BaseHelper {
         System.out.println("DEV CHECK: MEMORY SIZE HAVE BEEN SELECTED");
     }
 
-    public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
+    public void inputPriceRangeAndFilterCategory(String brand,String lowPrice, String highPrice,String memory) throws InterruptedException {
 
         inputLowPriceRange(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();
         selectMemorySize(memory);
+
         Thread.sleep(3000);
 
     }

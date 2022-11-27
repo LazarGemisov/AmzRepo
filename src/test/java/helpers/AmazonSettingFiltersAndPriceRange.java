@@ -1,18 +1,9 @@
 package helpers;
 
-import org.junit.Assert;
-import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import pages.AmazonHomePage;
-import pages.AmazonSearchResultPage;
-import pages.AmazonSelectedArticlePage;
 import tests.BaseTest;
 
-import java.util.List;
-
 public class AmazonSettingFiltersAndPriceRange extends BaseTest {
-
+/*
     @Test
     public void AmzSettingFiltersAndPriceRange() throws InterruptedException{
         //MARK: SEARCH TEST AND CHECKING FOR WANTED TERM
@@ -70,4 +61,6 @@ public class AmazonSettingFiltersAndPriceRange extends BaseTest {
 
         Thread.sleep(3000);
     }
+
+ */
 }

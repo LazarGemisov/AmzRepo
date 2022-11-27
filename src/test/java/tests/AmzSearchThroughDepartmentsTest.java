@@ -16,7 +16,7 @@ public class AmzSearchThroughDepartmentsTest extends BaseTest {
 
     @Test
     public void amzCategoryAndFilterTest () throws InterruptedException{
-        //MARK: NAVIGATE TO AMAZON HOME PAGE AND SEARCH THRU DEPARTMENTS
+        //MARK: NAVIGATE TO AMAZON HOME PAGE AND SEARCH THROUGH DEPARTMENTS
         AmazonHomePage amzCategoryAndFilter = new AmazonHomePage(driver);
         String userDetails = amzCategoryAndFilter.amzForDepartments(url,username,pass,category,subCategory,searchTerm,brand);
         // TITLE: ASSERT FOR LOGGED IN USER

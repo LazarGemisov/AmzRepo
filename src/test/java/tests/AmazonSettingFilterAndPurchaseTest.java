@@ -35,7 +35,7 @@ public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
 
 
         AmazonSearchResultPage setPriceAndFilters = new AmazonSearchResultPage(driver);
-        setPriceAndFilters.inputPriceRangeAndFilterCategory(lowPrice,highPrice,phoneMemory);
+        setPriceAndFilters.inputPriceRangeAndFilterCategory(brand,lowPrice,highPrice,phoneMemory);
         WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllFilteredResults = filterResultsCont.findElements(By.className("s-widget-spacing-small"));
 

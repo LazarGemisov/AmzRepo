@@ -77,14 +77,11 @@ public class AmazonSelectedArticlePage extends BaseHelper {
 
     private void warrantyPopUp() throws InterruptedException {
         // MARK: THIS IS ONLY DISPLAYED ONCE, AND YOUR ACCOUNT REMEMBERS YOUR PREFERENCES
-       // WebElement popUp = driver.findElement(By.className("attach-warranty-button-row"));
         if (popUp.isDisplayed()) {
             wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-warranty-button-row")));
             List<WebElement> buttonList = buttonsContainer.findElements(By.className("a-button-inner"));
            wdWait.until(ExpectedConditions.elementToBeClickable(buttonList.get(1)));
             buttonList.get(1).click();
-
-
         }
     }
 
@@ -97,7 +94,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
 
     public void addToTheCart(String desiredQty,String desiredColor) throws InterruptedException{
         setColor(desiredColor);
-        //Thread.sleep(2000);
+        Thread.sleep(2000);
         wdWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("hover")));
         WebElement addText = feature.findElement(By.className("a-unordered-list"));
         wdWait.until(ExpectedConditions.visibilityOf(addText));

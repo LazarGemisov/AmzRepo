@@ -180,7 +180,7 @@ public class AmazonHomePage extends BaseHelper {
             enterUsername(username);
             enterPass(pass);
         }
-        confirmAccount();
+        //confirmAccount();
         checkForCartItems();
 
         String userDetails = checkForUser();
