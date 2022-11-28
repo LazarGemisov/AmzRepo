@@ -24,7 +24,7 @@ public class AmzSearchThroughDepartmentsTest extends BaseTest {
 
         // TITLE: FILTERS AND CATEGORIES IN CellPhones&Accessories DEPARTMENT
         NewAmazonCategoryAndFilterPage amazonCategory = new NewAmazonCategoryAndFilterPage(driver);
-        amazonCategory.inputFilters(brand,searchTerm,lowPrice,highPrice);
+        amazonCategory.inputFilters(searchTerm,lowPrice,highPrice);
 
         // TITLE: RESULTS PAGE AFTER SETTING FILTERS IN CellPhones&Accessories DEPARTMENT
         NewAmazonCategoryAndFilterResultPage amzCategoryAndFilterResults = new NewAmazonCategoryAndFilterResultPage(driver);
@@ -40,17 +40,21 @@ public class AmzSearchThroughDepartmentsTest extends BaseTest {
             }
             i++;
         }
-        boolean titleMissingSearchTerm = false;
+        boolean titleMissingSearchTerm = true;
         for (WebElement list:listOfTitles){
 
             if (!list.getText().toLowerCase().contains(searchTerm.toLowerCase())) {
                 titleMissingSearchTerm = true;
+            }else{
+                titleMissingSearchTerm = false;
             }
             //Assert.assertTrue("ALL ARTICLES DO NOT CONTAIN SEARCH TERM", list.getText().toLowerCase().contains(searchTerm.toLowerCase()));
         }
-        if (titleMissingSearchTerm){
+        if (titleMissingSearchTerm==true){
             System.out.println("DEV COMMENTS: ERROR!!! ALL ARTICLES DO NOT CONTAIN SEARCH TERM, BUT MAYBE WWE CAN LIVE WITH THIS"+System.lineSeparator()+
                          "WE WILL NOT DO ASSERT FOR THIS CONDITION");
+        }else {
+            System.out.println("DEV COMMENTS: ALL ARTICLES CONTAIN SEARCH TERM");
         }
 
        //Assert.assertFalse("Not all results are shown in the list, page is giving us a option to see all results in other departments",resultsNumber != allDepNumber);

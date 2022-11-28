@@ -71,7 +71,7 @@ private void checkForCategories() {
         }
     }
 
-    public void inputFilters(String brand, String term, String lowPrice, String highPrice) throws InterruptedException {
+    public void inputFilters(String term, String lowPrice, String highPrice) throws InterruptedException {
 
         inputSearchTerm(term);
         inputLowPriceRange(lowPrice);

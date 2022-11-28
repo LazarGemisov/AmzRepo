@@ -88,7 +88,7 @@ public class AmazonHomePage extends BaseHelper {
         submitSignIn.click();
     }
 
-    private void confirmAccount() throws InterruptedException {
+    private void confirmIdentity() throws InterruptedException {
         if (warningForSignIn.isDisplayed()) {
             Thread.sleep(15000);
         }
@@ -110,11 +110,10 @@ public class AmazonHomePage extends BaseHelper {
         }
     }
     private void clearShoppingCart()throws InterruptedException{
-        System.out.println(cartCount.getText());
         cartButton.click();
         wdWait.until(ExpectedConditions.elementToBeClickable(deleteCart));
         deleteCart.click();homePageLogo.click();
-        System.out.println("DEV CHECK: WE HAD DELETE EVERYTHING IN THE CART !!!");
+        System.out.println("DEV CHECK: WE HAD DELETED EVERYTHING IN THE CART !!!");
     }
 
     private void inputSearchTerm (String term){
@@ -147,22 +146,17 @@ public class AmazonHomePage extends BaseHelper {
                 break;
             }
         }
-        //Thread.sleep(1000);
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("hmenu-translateX")));
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("hmenu-item")));
     }
     private void clickOnSubCategory(String subCategory){
-
-
         List<WebElement> listOfSubCategories = subCategoryCont.findElements(By.className("hmenu-item"));
         for (WebElement list:listOfSubCategories){
             if (list.getText().contains(subCategory)) {
                 list.click();
                 break;
             }
-
         }
-
     }
 
 

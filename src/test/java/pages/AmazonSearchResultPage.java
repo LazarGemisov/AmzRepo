@@ -53,7 +53,7 @@ public class AmazonSearchResultPage extends BaseHelper {
         System.out.println("DEV CHECK: PRICE RANGE IS APPLIED");
     }
 
-    private  void selectMemorySize(String memory){
+    private  void selectMemorySize(String memory) throws InterruptedException {
 
         List<WebElement> memoryList = refinementsCont.findElements(By.className("a-list-item"));
         for (WebElement list:memoryList){
@@ -65,30 +65,39 @@ public class AmazonSearchResultPage extends BaseHelper {
             }
         }
         System.out.println("DEV CHECK: MEMORY SIZE HAVE BEEN SELECTED");
+        //Thread.sleep(1000);
     }
 
-    public void inputPriceRangeAndFilterCategory(String brand,String lowPrice, String highPrice,String memory) throws InterruptedException {
-
+    public void inputPriceRangeAndFilterCategory(String lowPrice, String highPrice,String memory) throws InterruptedException {
+        selectMemorySize(memory);
         inputLowPriceRange(lowPrice);
         inputHighPrice(highPrice);
         clickToFilterPriceRange();
-        selectMemorySize(memory);
 
-        Thread.sleep(3000);
+
+
+
+        Thread.sleep(1000);
 
     }
-    public void clickOnDesiredArticle(int desiredArticle){
+    public void clickOnDesiredArticle(int desiredArticle) throws InterruptedException {
 
         List<WebElement> allSearchResults = searchResultContainer.findElements(By.className("s-widget-spacing-small"));
         int i = 0;
 
         for (WebElement list:allSearchResults){
 
-            if (i==desiredArticle){
+            if (i==desiredArticle && allSearchResults.get(i).getText().contains("Ships to Serbia")){
                 allSearchResults.get(i).click();
+
+
+                break;
+            } else {
+                allSearchResults.remove(desiredArticle);
+                allSearchResults.get(desiredArticle).click();
+                System.out.println("DEV COMMENT:WE HAD REMOVE ARTICLE WITCH DOSEN'T SHIP TO SERBIA");
                 break;
             }
-            i++;
 
         }
         System.out.println("DEV CHECK: SELECTED ARTICLE WAS CHOSEN");

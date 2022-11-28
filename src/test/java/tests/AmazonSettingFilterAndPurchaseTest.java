@@ -22,11 +22,25 @@ public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
         WebElement allResultsContainer = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllResults = allResultsContainer.findElements(By.className("s-widget-spacing-small"));
 
-
+        boolean allArticlesContainSearchTerm = true;
         for (WebElement listOfTitles:listOfAllResults) {
             Assert.assertTrue("All of the articles do not contain desired searchTerm",
                     listOfTitles.getText().toLowerCase().contains(termSplitted[0].toLowerCase()) || listOfTitles.getText().toLowerCase().contains(termSplitted[1].toLowerCase()));
+            if (!listOfTitles.getText().toLowerCase().contains(searchTerm)) {
+                allArticlesContainSearchTerm = false;
+            } else {
+                allArticlesContainSearchTerm = true;
+            }
         }
+        if (allArticlesContainSearchTerm == true) {
+            System.out.println("DEV COMMENTS: ALL ARTICLES CONTAIN SEARCH TERM");
+        } else {
+            System.out.println("DEV COMMENTS: ALL ARTICLES DO NOT CONTAIN SEARCH TERM, BUT THIS IS HOW AMAZON WORKS, MAYBE WE CAN LIVE WITH THIS" +
+                    System.lineSeparator() + "ASSERT HAD PASSED BECAUSE WE HAD SPLITTED SEARCH TERM");
+        }
+
+
+
 
         Assert.assertTrue("You are not logged in ",userDetails.toLowerCase().contains(lastName.toLowerCase()));
 
@@ -35,7 +49,7 @@ public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
 
 
         AmazonSearchResultPage setPriceAndFilters = new AmazonSearchResultPage(driver);
-        setPriceAndFilters.inputPriceRangeAndFilterCategory(brand,lowPrice,highPrice,phoneMemory);
+        setPriceAndFilters.inputPriceRangeAndFilterCategory(lowPrice,highPrice,phoneMemory);
         WebElement filterResultsCont = driver.findElement(By.className("s-search-results"));
         List<WebElement> listOfAllFilteredResults = filterResultsCont.findElements(By.className("s-widget-spacing-small"));
 
@@ -64,7 +78,7 @@ public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
             }else{
                 break;
             }
-            if(priceOfFilteredResultsInt > lowPriceInt && priceOfFilteredResultsInt < highPriceInt){
+            if(priceOfFilteredResultsInt >= lowPriceInt && priceOfFilteredResultsInt <= highPriceInt){
                 priceIsWithinRange = true;
             }else {
                 priceIsWithinRange = false;
@@ -82,17 +96,14 @@ public class AmazonSettingFilterAndPurchaseTest extends BaseTest {
         //MARK: CLICKING ON DESIRED ARTICLE
 
         setPriceAndFilters.clickOnDesiredArticle(desiredArticle);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         //MARK: SETTING QUANTITY,ADDING TO THE CART AND PROCEEDING TO CHECKOUT
         AmazonSelectedArticlePage addQtyAndToTheCart = new AmazonSelectedArticlePage(driver);
         addQtyAndToTheCart.addToTheCart(desiredQuantity,desiredColor);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
 
-        //MARK: CHECKOUT MOVE TO ANOTHER CLASS
-       /* AmazonCheckoutPage checkout = new AmazonCheckoutPage(driver);
-        checkout.checkout();*/
 
-        // MARK THIRD PART OF THE TASK
+        //MARK: ORDER SUMMARY
 
         AmazonShoppingCartSummaryPage checkSummary = new AmazonShoppingCartSummaryPage(driver);
         String summaryTest = checkSummary.checkSummary();

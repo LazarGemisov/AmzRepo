@@ -48,7 +48,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         if (colorName.getText().contains(desiredColor)) {
             Select selectQty = new Select(driver.findElement(By.name("quantity")));
             selectQty.selectByValue(desiredQty);
-            //Thread.sleep(2000);
+
         }
     }
 
