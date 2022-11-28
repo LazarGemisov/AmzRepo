@@ -39,6 +39,8 @@ public class AmazonSelectedArticlePage extends BaseHelper {
    WebElement addCont;
    @FindBy (id = "feature-bullets")
    WebElement feature;
+   @FindBy (id = "attachDisplayAddBaseAlert")
+   WebElement addedToTheCart;
 
     private void setQty(String desiredQty, String desiredColor) throws InterruptedException{
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.name("quantity")));
@@ -85,6 +87,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         }
     }
 
+
     private void proceedToCheckout(){
         //wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("sw-atc-confirmation"))); old version of popup window
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("attach-primary-atc-confirm-box")));
@@ -105,6 +108,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         clickOnAddToTheCartButton();
         Thread.sleep(1000);
         warrantyPopUp();
+
         proceedToCheckout();
 
     }
