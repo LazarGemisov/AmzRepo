@@ -1,9 +1,10 @@
-package tests;
+package helpers;
 
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import tests.BaseTest;
 
 public class ProbnaKlasaTest extends BaseTest
 {

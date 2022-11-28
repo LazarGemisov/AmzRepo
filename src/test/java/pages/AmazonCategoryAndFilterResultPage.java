@@ -9,8 +9,8 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class NewAmazonCategoryAndFilterResultPage extends BaseHelper {
-    public NewAmazonCategoryAndFilterResultPage(WebDriver driver)
+public class AmazonCategoryAndFilterResultPage extends BaseHelper {
+    public AmazonCategoryAndFilterResultPage(WebDriver driver)
     {
         this.driver=driver;
         PageFactory.initElements(driver,this);

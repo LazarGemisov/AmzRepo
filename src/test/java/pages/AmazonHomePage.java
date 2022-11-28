@@ -37,8 +37,6 @@ public class AmazonHomePage extends BaseHelper {
     WebElement searchTxtFiled;
     @FindBy (className = "nav-search-submit")
     WebElement loupe;
-    @FindBy (id="brandsRefinements")
-    WebElement brandsContainer;
     @FindBy (className = "a-list-item")
     List<WebElement> listOfBrands;
     @FindBy (id = "nav-link-accountList-nav-line-1")
@@ -59,8 +57,8 @@ public class AmazonHomePage extends BaseHelper {
     @FindBy (className = "hmenu-translateX")
     WebElement subCategoryCont;
 
-    @FindBy(id = "auth-warning-message-box")
-    WebElement warningForSignIn;
+   /* @FindBy(id = "auth-warning-message-box")
+    WebElement warningForSignIn;*/
 
     private void deleteAllCookies()  {
         driver.manage().deleteAllCookies();
@@ -88,11 +86,11 @@ public class AmazonHomePage extends BaseHelper {
         submitSignIn.click();
     }
 
-    private void confirmIdentity() throws InterruptedException {
+    /*private void confirmIdentity() throws InterruptedException {
         if (warningForSignIn.isDisplayed()) {
             Thread.sleep(15000);
         }
-    }
+    }*/
     private String checkForUser(){
         String checkForUserName = userName.getText().replace("Hello","")
                                   .replace(",","").replace(" ","");
@@ -109,7 +107,7 @@ public class AmazonHomePage extends BaseHelper {
             System.out.println("DEV CHECK: SHOPPING CART IS EMPTY ");
         }
     }
-    private void clearShoppingCart()throws InterruptedException{
+    private void clearShoppingCart(){
         cartButton.click();
         wdWait.until(ExpectedConditions.elementToBeClickable(deleteCart));
         deleteCart.click();homePageLogo.click();
@@ -137,7 +135,7 @@ public class AmazonHomePage extends BaseHelper {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("nav-hamburger-menu")));
         hamburgerMenuBtn.click();
     }
-    private void clickOnCategory (String category) throws InterruptedException {
+    private void clickOnCategory (String category) {
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.id("hmenu-content")));
         List<WebElement> listOfCategories = hamburgerMenuCont.findElements(By.className("hmenu-item"));
         for (WebElement list:listOfCategories){
@@ -161,7 +159,7 @@ public class AmazonHomePage extends BaseHelper {
 
 
 
-    public String amazonSearch(String url, String username, String pass, String term, String brand)throws InterruptedException{
+    public String amazonSearch(String url, String username, String pass, String term, String brand) throws InterruptedException {
         deleteAllCookies();
         navigateToHomePage(url);
 
@@ -174,7 +172,7 @@ public class AmazonHomePage extends BaseHelper {
             enterUsername(username);
             enterPass(pass);
         }
-        //confirmAccount();
+        //Thread.sleep(30000);//confirmAccount();
         checkForCartItems();
 
         String userDetails = checkForUser();
@@ -190,7 +188,7 @@ public class AmazonHomePage extends BaseHelper {
     }
 
     //MARK: THIS FUNCTION IS FOR AMZ SEARCH THROUGH DEPARTMENTS TEST---------------------------------------------
-    public String amzForDepartments(String url, String username, String pass, String category, String subCategory, String term, String brand) throws InterruptedException {
+    public String amzForDepartments(String url, String username, String pass, String category, String subCategory) throws InterruptedException {
         navigateToHomePage(url);
         if (dontChangeShippingAddressButton.isDisplayed()) {
             shipping();
@@ -200,6 +198,7 @@ public class AmazonHomePage extends BaseHelper {
             enterUsername(username);
             enterPass(pass);
         }
+
         checkForCartItems();
 
         String userDetails = checkForUser();
@@ -208,7 +207,7 @@ public class AmazonHomePage extends BaseHelper {
         if (cartCurrentValue>cartDefaultValue){
             clearShoppingCart();
         }
-        //Thread.sleep(1000);
+        Thread.sleep(1000);
         clickOnCategoryMenu();
         clickOnCategory(category);
         clickOnSubCategory(subCategory);

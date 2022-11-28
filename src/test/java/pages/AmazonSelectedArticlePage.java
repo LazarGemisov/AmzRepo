@@ -68,7 +68,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
             i++;
 
         }
-        Thread.sleep(2000); // cheat
+        Thread.sleep(1000); // cheat
     }
     private void clickOnAddToTheCartButton(){
         wdWait.until(ExpectedConditions.elementToBeClickable(addToTheCartButton));
@@ -94,7 +94,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
 
     public void addToTheCart(String desiredQty,String desiredColor) throws InterruptedException{
         setColor(desiredColor);
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         wdWait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("hover")));
         WebElement addText = feature.findElement(By.className("a-unordered-list"));
         wdWait.until(ExpectedConditions.visibilityOf(addText));
@@ -103,7 +103,7 @@ public class AmazonSelectedArticlePage extends BaseHelper {
         wdWait.until(ExpectedConditions.elementToBeClickable(addToTheCartButton));
         setQty(desiredQty,desiredColor);
         clickOnAddToTheCartButton();
-        Thread.sleep(2000);
+        Thread.sleep(1000);
         warrantyPopUp();
         proceedToCheckout();
 

@@ -10,9 +10,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 
 import java.util.List;
 
-public class NewAmazonCategoryAndFilterPage extends BaseHelper {
+public class AmazonCategoryAndFilterPage extends BaseHelper {
     WebDriver driver;
-    public NewAmazonCategoryAndFilterPage(WebDriver driver)
+    public AmazonCategoryAndFilterPage(WebDriver driver)
     {
         this.driver=driver;
         PageFactory.initElements(driver,this);

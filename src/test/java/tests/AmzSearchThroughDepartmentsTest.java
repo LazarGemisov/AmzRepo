@@ -7,8 +7,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import pages.AmazonHomePage;
-import pages.NewAmazonCategoryAndFilterPage;
-import pages.NewAmazonCategoryAndFilterResultPage;
+import pages.AmazonCategoryAndFilterPage;
+import pages.AmazonCategoryAndFilterResultPage;
 
 import java.util.List;
 
@@ -18,16 +18,16 @@ public class AmzSearchThroughDepartmentsTest extends BaseTest {
     public void amzCategoryAndFilterTest () throws InterruptedException{
         //MARK: NAVIGATE TO AMAZON HOME PAGE AND SEARCH THROUGH DEPARTMENTS
         AmazonHomePage amzCategoryAndFilter = new AmazonHomePage(driver);
-        String userDetails = amzCategoryAndFilter.amzForDepartments(url,username,pass,category,subCategory,searchTerm,brand);
+        String userDetails = amzCategoryAndFilter.amzForDepartments(url,username,pass,category,subCategory);
         // TITLE: ASSERT FOR LOGGED IN USER
         Assert.assertTrue("You are not logged in ", userDetails.toLowerCase().contains(lastName.toLowerCase()));
 
         // TITLE: FILTERS AND CATEGORIES IN CellPhones&Accessories DEPARTMENT
-        NewAmazonCategoryAndFilterPage amazonCategory = new NewAmazonCategoryAndFilterPage(driver);
+        AmazonCategoryAndFilterPage amazonCategory = new AmazonCategoryAndFilterPage(driver);
         amazonCategory.inputFilters(searchTerm,lowPrice,highPrice);
 
         // TITLE: RESULTS PAGE AFTER SETTING FILTERS IN CellPhones&Accessories DEPARTMENT
-        NewAmazonCategoryAndFilterResultPage amzCategoryAndFilterResults = new NewAmazonCategoryAndFilterResultPage(driver);
+        AmazonCategoryAndFilterResultPage amzCategoryAndFilterResults = new AmazonCategoryAndFilterResultPage(driver);
         wdWait.until(ExpectedConditions.presenceOfElementLocated(By.className("s-result-list")));
         WebElement categoryAndFilterCont = driver.findElement(By.className("s-result-list"));
         List<WebElement> listOfTitles = categoryAndFilterCont.findElements(By.className("a-size-base-plus"));
@@ -57,7 +57,7 @@ public class AmzSearchThroughDepartmentsTest extends BaseTest {
             System.out.println("DEV COMMENTS: ALL ARTICLES CONTAIN SEARCH TERM");
         }
 
-       //Assert.assertFalse("Not all results are shown in the list, page is giving us a option to see all results in other departments",resultsNumber != allDepNumber);
+       //Assert.assertFalse("Not all results are shown in the list, page is giving us option to see all results in other departments",resultsNumber != allDepNumber);
         WebElement allDepartmentsBtn = amzCategoryAndFilterResults.returnWebElementDepartmentButton();
         if (allDepartmentsBtn.isDisplayed()){
             System.out.println("DEV COMMENTS:Not all results are shown in the list, page is giving us a option to see all results in other departments"+System.lineSeparator()+
